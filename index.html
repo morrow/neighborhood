@@ -2,29 +2,31 @@
 <html lang='en'>
   <head>
     <title>Neighborhood</title>
+    <link rel='stylesheet' href='/app.css' />
   </head>
   <body>
     <div id='wrap'>
-      <div id='filter'>
-        <input data-bind='value: filter_input, valueUpdate: "afterkeydown"' />
-        <ul data-bind='foreach: getVisibleItems(filter_input())'>
-          <li>
-           <div data-bind='text: $data.name'></div>
-           <div data-bind='text: $data.description'></div>
-          </li>
-        </ul>
+      <div id='header'>
+        <div id='logo'>Neighborhood</div>
+        <navigation id='navigation'>
+          Show All
+          Show Bars
+          Show Restaurants
+          Show Parks
+        </navigation>
       </div>
-      <navigation id='navigation'>
-        <div data-bind='text: body'></div>
-      </navigation>
-      <div id='map'>
-        <div data-bind='text: body'></div>
-        <ul data-bind='foreach: getVisibleItems(filter_input())'>
-          <li>
-           <div data-bind='text: $data.coordinates'></div>
-          </li>
-        </ul>
-        <div id='map-target' style='width:80vw;height:500px'>map goes here</div>
+      <div id='main'>
+        <div id='sidebar'>
+          <div id='filter'>
+            <input data-bind='value: filter_input, valueUpdate: "afterkeydown"' />
+          </div>
+          <ul data-bind='foreach: getVisibleItems(filter_input())'>
+            <li>
+            <div data-bind='text: $data.name, attr:{title: $data.description}'></div>
+            </li>
+          </ul>
+        </div>
+        <div id='map'>map goes here</div>
       </div>
     </div>
     <script type='text/javascript' src='knockout-3.4.2.js'></script>
