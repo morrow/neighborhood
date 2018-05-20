@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Alfa+Slab+One');
+
 * {
   margin: 0;
   padding: 0;
@@ -19,16 +21,19 @@ body {
   height: 60px;
   width: 100%;
   display:flex;
-  background: red;
 }
 
 
 #header #logo {
   text-align: center;
   padding:1em 0;
-  border-right:1px solid #ccc;
+  border-right:1px solid #333;
   width:200px;
-  background: #fff;
+  color: #406d80;
+  background: #193341;
+  letter-spacing: 2px;
+  font-family: 'Alfa Slab One';
+  font-size:20px;
 }
 
 #navigation {
@@ -41,21 +46,32 @@ body {
 #navigation div {
   flex: 1;
   cursor: pointer;
-  padding: 1em;
+  padding: 1.2em;
   border-right: 1px solid #555;
-  font-weight: bold;
-  font-size:16px;
-  /*min-width:150px;*/
+  font-size:15px;
   text-align: center;
   letter-spacing: 2px;
   text-transform: capitalize;
   color: #555;
+  min-width:150px;
   background: linear-gradient(#111, #333);
+}
+
+.visible .fa-beer {
+  color: orange;
+}
+.visible .fa-tree {
+  color: #00aa00;
+}
+.visible .fa-cutlery {
+  color: white;
+}
+.visible .fa-university {
+  color:purple;
 }
 
 #navigation div:after {
   content: '☐';
-  margin-top:-0.1em;
   font-size:16px;
   float: right;
   font-weight: normal;
@@ -110,7 +126,7 @@ body {
 }
 
 #main {
-  background:yellow;
+  background:#193341;
   display: flex;
   height: calc(100% - 60px);
   width:100%;

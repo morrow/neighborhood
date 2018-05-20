@@ -1,20 +1,3 @@
-_fetch = ((url, options={})=> {
-  options.method = options.method || 'GET'
-  return new Promise ((resolve, reject) => {
-    let xhr = new XMLHttpRequest()
-    xhr.onload = (e)=>{
-      if(xhr.status >= 200 && xhr.status < 300){
-        resolve(xhr.response)
-      } else {
-        reject(xhr.status)
-      }
-    }
-    xhr.onerror = reject
-    xhr.open(options.method, url)
-    xhr.send()
-  })
-})
-
 const MapView = (parent)=> {
   this.body = 'map'
 }
@@ -66,6 +49,9 @@ const App = ()=> {
     } else {
       this.visible_categories.push(category)
     }
+  }
+  this.sidebarClick = (id)=>{
+    this.Map && this.Map.showWindow ? this.Map.showWindow(id) : 1
   }
   this.hasMatch = (item, query='')=> Object.keys(item).filter(k=>item[k] != undefined && item[k].toString().toLowerCase().match(query.toLowerCase())).length > 0
   this.getAllItems = ()=> this.locations.allIds.map(id=>this.locations.byId[id])

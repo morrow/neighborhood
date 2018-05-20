@@ -120,18 +120,35 @@ Map = (getVisibleItems, getAllItems, target='map', map_config={})=> {
     google_map = new google.maps.Map(document.getElementById(target), map_options);
     google.maps.event.addListener(google_map, 'click', function() {
       var j, len, ref, results, window_info;
-      if (window.info_windows) {
-        ref = window.info_windows;
-        results = [];
+      if (info_windows) {
+        ref = info_windows;
         for (j = 0, len = ref.length; j < len; j++) {
           window_info = ref[j];
-          results.push(window_info.close());
+          window_info.close();
         }
-        return results;
       }
     })
     google.maps.event.addDomListener(window, 'resize', ()=> google.maps.event.trigger(map, 'resize'))
   }
+
+  const showWindow = (marker)=>{
+    if(typeof marker == "number"){
+      marker =  markers[marker]
+    }
+    getYelpInfo(marker._location)
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+    window.setTimeout(()=>{
+      marker.setAnimation(null)
+    }, 500)
+    var j, len, ref, window_info;
+    ref = info_windows;
+    for (j = 0, len = ref.length; j < len; j++) {
+      window_info = ref[j];
+      window_info.close();
+    }
+    return info_windows[marker.id].open(google_map, marker);
+  }
+
 
   const setMarkers = function(animate=true) {
     var i, location, myLatLng, results, shape;
@@ -166,23 +183,14 @@ Map = (getVisibleItems, getAllItems, target='map', map_config={})=> {
           icon: icon,
           shape: fontawesome.markers[location.icon.toUpperCase().replace(/-/g, '_')],
           title: location.name,
+          _location: location,
         });
         info_windows[i] = new google.maps.InfoWindow({
           content: `<div class='info_window'><div class='title'>${location.name}</div><div class='description'>${location.description}</div></div>`
         });
         google.maps.event.addListener(markers[i], 'click', function() {
-          this.setAnimation(google.maps.Animation.BOUNCE);
-          let marker = this
-          window.setTimeout(()=>{
-            marker.setAnimation(null)
-          }, 500)
-          var j, len, ref, window_info;
-          ref = info_windows;
-          for (j = 0, len = ref.length; j < len; j++) {
-            window_info = ref[j];
-            window_info.close();
-          }
-          return info_windows[this.id].open(google_map, this);
+          let that = this
+          showWindow(that)
         });
       }
     }
@@ -191,6 +199,6 @@ Map = (getVisibleItems, getAllItems, target='map', map_config={})=> {
   initialize()
   setMarkers()
 
-  return { initialize, setMarkers }
+  return { initialize, setMarkers, showWindow }
 
 }
