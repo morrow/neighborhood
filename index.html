@@ -18,7 +18,7 @@
       <div id='main'>
         <div id='sidebar'>
           <div id='filter'>
-            <input data-bind='value: filter_input, valueUpdate: "afterkeydown"' />
+            <input data-bind='value: filter_input, valueUpdate: "afterkeydown"' placeholder="filter" />
           </div>
           <div class='items' data-bind='foreach: getVisibleItems(filter_input())'>
             <div class='item' data-bind='text: $data.name, attr:{title: $data.description}'></div>
