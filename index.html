@@ -8,11 +8,11 @@
     <div id='wrap'>
       <div id='header'>
         <div id='logo'>Neighborhood</div>
-        <navigation id='navigation'>
-          Show All
-          Show Bars
-          Show Restaurants
-          Show Parks
+        <navigation id='navigation' data-bind="foreach: categories">
+          <div data-bind="click: categoryClick, css: {visible: visible_categories.indexOf($data)>=0}">
+            <span data-bind="text: $data"></span>
+            <i data-bind="css: getCategoryIconCss($data)"></i>
+          </div>
         </navigation>
       </div>
       <div id='main'>
@@ -20,17 +20,17 @@
           <div id='filter'>
             <input data-bind='value: filter_input, valueUpdate: "afterkeydown"' />
           </div>
-          <ul data-bind='foreach: getVisibleItems(filter_input())'>
-            <li>
-            <div data-bind='text: $data.name, attr:{title: $data.description}'></div>
-            </li>
-          </ul>
+          <div class='items' data-bind='foreach: getVisibleItems(filter_input())'>
+            <div class='item' data-bind='text: $data.name, attr:{title: $data.description}'></div>
+          </div>
         </div>
         <div id='map'>map goes here</div>
       </div>
     </div>
     <script type='text/javascript' src='knockout-3.4.2.js'></script>
     <script type='text/javascript' src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAjH1cIi1VDT4x3QHQi4V4y4ynTPUAr8q0'></script>
+    <script type='text/javascript' src='/fontawesome.js'></script>
+    <script type='text/javascript' src='/fontawesome-markers.min.js'></script>
     <script type='text/javascript' src='/map.js'></script>
     <script type='text/javascript' src='/app.js'></script>
   </body>

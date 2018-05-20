@@ -8,7 +8,7 @@ html, body, #wrap {
 }
 
 body {
-  font-family:'San Francisco', arial;
+  font-family:helvetica neue;
 }
 
 #wrap {
@@ -22,18 +22,74 @@ body {
   background: red;
 }
 
+
 #header #logo {
   text-align: center;
+  padding:1em 0;
+  border-right:1px solid #ccc;
   width:200px;
-  background: green;
+  background: #fff;
 }
 
+#navigation {
+  flex: 1;
+  display: flex;
+  align-items: 'stretch';
+  background: linear-gradient(#333, #111);
+}
+
+#navigation div {
+  flex: 1;
+  cursor: pointer;
+  padding: 1em;
+  border-right: 1px solid #555;
+  font-weight: bold;
+  font-size:16px;
+  /*min-width:150px;*/
+  text-align: center;
+  letter-spacing: 2px;
+  text-transform: capitalize;
+  color: #555;
+  background: linear-gradient(#111, #333);
+}
+
+#navigation div:after {
+  content: '☐';
+  margin-top:-0.1em;
+  font-size:16px;
+  float: right;
+  font-weight: normal;
+}
+
+#navigation div:hover {
+  /*background: #eee;*/
+}
+
+#navigation div.visible {
+  color: white;
+}
+
+#navigation div.visible:after {
+  content:'✓';
+  color: rgb(50,200,50);
+}
+
+#navigation div.hidden {
+  opacity:0.5;
+  color: red;
+}
 
 #sidebar {
-  background: orange;
+  background: linear-gradient(#222, #111);
   overflow-y: auto;
   height: 100%;
   min-width: 200px;
+  color: white;
+}
+
+#sidebar .item {
+  padding: 1em;
+  border-bottom: 1px solid #eee;
 }
 
 #main {

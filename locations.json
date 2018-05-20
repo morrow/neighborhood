@@ -4,7 +4,8 @@
       "id": 0,
       "name": "Husk",
       "description": "An ever-changing menu of locally sourced Southern dishes served in a restored Victorian-era home.",
-      "category": "retaurants",
+      "category": "restaurants",
+      "icon": "cutlery",
       "coordinates": [32.778074,-79.9342917]
     },
     "1": {
@@ -12,19 +13,102 @@
       "name": "Revelry",
       "description": "It's a brewery",
       "category": "breweries",
+      "icon": "beer",
       "coordinates": [32.807076,-79.9471987]
     },
     "2": {
       "id": 2,
-      "name": "Waterfront Park",
-      "description": "Well-known park with water views plus a large lawn, walkways & 2 fountains.",
+      "name": "White Point Garden",
+      "description": "This public garden beside the water offers paved paths, military statues, canons & picnic areas.",
       "category": "parks",
-      "coordinates": [32.7782371,-79.9285614]
+      "icon": "tree",
+      "coordinates": [32.7699184,-79.9317926]
+    },
+    "3": {
+      "id": 3,
+      "name": "USS Yorktown",
+      "description": "Part of Patriots Point, this WWII-era aircraft carrier with old jets on board offers tours & more.",
+      "category": "museums",
+      "icon": "university",
+      "coordinates": [32.7904357,-79.910721]
+    },
+    "4": {
+      "id": 4,
+      "name": "South Carolina Aquarium",
+      "description": "Massive aquarium with interactive exhibits & hundreds of creatures, including many native species.",
+      "category": "museums",
+      "icon": "university",
+      "coordinates": [32.7910988,-79.9275487]
+    },
+    "5": {
+      "id": 5,
+      "name": "Marion Square",
+      "description": "Urban green space with historic significance, hosting regular events including a farmer's market.",
+      "category": "parks",
+      "icon": "tree",
+      "coordinates": [32.7868804,-79.9378529]
+    },
+    "6": {
+      "id": 6,
+      "name": "Charleston Riverdogs Ballpark",
+      "description": "Ballpark seating thousands of fans watching Charleston's minor league baseball team play home games.",
+      "category": "parks",
+      "icon": "tree",
+      "coordinates": [32.7887708,-79.9562956]
+    },
+    "7": {
+      "id": 7,
+      "name": "Prohibition",
+      "description": "Rustic-chic Modern American restaurant with creative cocktails & a Jazz Age theme.",
+      "category": "restaurants",
+      "icon": "cutlery",
+      "coordinates": [32.7912354,-79.9424436]
+    },
+    "8": {
+      "id": 8,
+      "name": "Palmetto Brewing Co.",
+      "description": "Brewery",
+      "category": "breweries",
+      "icon": "beer",
+      "coordinates": [32.8013833,-79.9480728]
+    },
+    "9": {
+      "id": 9,
+      "name": "Cooper River Brewing Company",
+      "description": "Brewery",
+      "category": "breweries",
+      "icon": "beer",
+      "coordinates": [32.8159209,-79.9570813]
+    },
+     "10": {
+      "id": 10,
+      "name": "Old Exchange and Provost Dungeon",
+      "description": "Costumed docents lead tours of this historic building, formerly a Revolutionary prison & City Hall.",
+      "category": "museums",
+      "icon": "university",
+      "coordinates": [32.7768497,-79.9289975]
+    },
+     "11": {
+      "id": 11,
+      "name": "167 Raw",
+      "description": "Cozy, casual seafood eatery serving oysters, lobster rolls, fish tacos, ceviche & more.",
+      "category": "restaurants",
+      "icon": "cutlery",
+      "coordinates": [32.7843652,-79.9310932]
     }
   },
   "allIds": [
     0,
     1,
-    2
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
   ]
 }
