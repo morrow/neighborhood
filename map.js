@@ -145,19 +145,27 @@ Map = (getVisibleItems, getAllItems, target='map', map_config={})=> {
       window_info = ref[j];
       window_info.close();
     }
+    if(info_windows[marker.id].getContent().indexOf('yelp')<0){
+      getYelpInfo(getAllItems()[marker.id]).then((data)=>{
+        info_windows[marker.id].setContent(info_windows[marker.id].getContent() + processYelpContent(data))
+        google_map.panTo(new google.maps.LatLng(info_windows[marker.id].getPosition().lat() + 0.005, info_windows[marker.id].getPosition().lng()))
+      })
+    }
     return info_windows[marker.id].open(google_map, marker);
   }
 
   const processYelpContent = (content)=>{
-    console.log(content.businesses[0])
     let business = content.businesses[0]
+    if(business == undefined){
+      return ''
+    }
     return `
 <div class='yelp'>
-  <div class='image'><img src='${business.image_url}' /></div>
-  <div class='rating'>Rating: ${business.rating} / 5</div>
-  <div class='price'>Price: ${business.price}</div>
-  <div class='price'>Price: ${business.phone}</div>
-</div>
+  <div class='image'><img src='${business.image_url}' /></div>`
++ (business.rating ? `<div class='rating'>Rating: ${business.rating} / 5</div>` : '')
++ (business.price ? `<div class='price'>Price: ${business.price}</div>` : '')
++ (business.phone ? `<div class='phone'>Phone: ${business.phone}</div>` : '')
++ `</div>
 `
   }
 
@@ -206,12 +214,6 @@ Map = (getVisibleItems, getAllItems, target='map', map_config={})=> {
         });
         google.maps.event.addListener(markers[i], 'click', function() {
           let that = this
-          if(info_windows[that.id].getContent().indexOf('yelp')<0){
-            getYelpInfo(all_items[that.id]).then((data)=>{
-              info_windows[that.id].setContent(info_windows[that.id].getContent() + processYelpContent(data))
-              google_map.panTo(new google.maps.LatLng(info_windows[that.id].getPosition().lat() + 0.005, info_windows[that.id].getPosition().lng()))
-            })
-          }
           showWindow(that)
         });
       }
