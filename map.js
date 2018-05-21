@@ -135,7 +135,6 @@ Map = (getVisibleItems, getAllItems, target='map', map_config={})=> {
     if(typeof marker == "number"){
       marker =  markers[marker]
     }
-    getYelpInfo(marker._location)
     marker.setAnimation(google.maps.Animation.BOUNCE);
     window.setTimeout(()=>{
       marker.setAnimation(null)
@@ -147,6 +146,19 @@ Map = (getVisibleItems, getAllItems, target='map', map_config={})=> {
       window_info.close();
     }
     return info_windows[marker.id].open(google_map, marker);
+  }
+
+  const processYelpContent = (content)=>{
+    console.log(content.businesses[0])
+    let business = content.businesses[0]
+    return `
+<div class='yelp'>
+  <div class='image'><img src='${business.image_url}' /></div>
+  <div class='rating'>Rating: ${business.rating} / 5</div>
+  <div class='price'>Price: ${business.price}</div>
+  <div class='price'>Price: ${business.phone}</div>
+</div>
+`
   }
 
 
@@ -186,10 +198,20 @@ Map = (getVisibleItems, getAllItems, target='map', map_config={})=> {
           _location: location,
         });
         info_windows[i] = new google.maps.InfoWindow({
-          content: `<div class='info_window'><div class='title'>${location.name}</div><div class='description'>${location.description}</div></div>`
+          content: `
+<div id='${i}' class='info_window'>
+  <div class='title'>${location.name}</div>
+  <div class='description'>${location.description}</div>
+</div>`
         });
         google.maps.event.addListener(markers[i], 'click', function() {
           let that = this
+          if(info_windows[that.id].getContent().indexOf('yelp')<0){
+            getYelpInfo(all_items[that.id]).then((data)=>{
+              info_windows[that.id].setContent(info_windows[that.id].getContent() + processYelpContent(data))
+              google_map.panTo(new google.maps.LatLng(info_windows[that.id].getPosition().lat() + 0.005, info_windows[that.id].getPosition().lng()))
+            })
+          }
           showWindow(that)
         });
       }

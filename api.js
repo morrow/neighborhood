@@ -20,17 +20,13 @@ _fetch = ((url, options={})=> {
   })
 })
 
-const getYelpInfo = (place)=> {
-  const url_base = 'https://api.yelp.com/v3/businesses/search'
+const getYelpInfo = async(place)=> {
+  const url_base = 'https://yelp.terrencemorrow.com'
   let options = {
     term: place.name,
-    latitude: place.coordinates[1],
-    longitude: place.coordinates[0],
+    longitude: place.coordinates[1],
+    latitude: place.coordinates[0],
   }
   let url = [url_base, Object.keys(options).map(key=>[key, encodeURIComponent(options[key])].join('=')).join('&')].join('?')
-  console.log(url)
-//   _fetch(url, {
-//     Authorization: `Bearer ${YELP_API_KEY}`
-//   }).then(JSON.parse).then((data)=>console.log(data))
-// }
+  return _fetch(url).then(JSON.parse)
 }

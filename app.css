@@ -151,3 +151,22 @@ body {
 #map .info_window .description {
   text-align: center;
 }
+
+.yelp {
+
+}
+
+.yelp .image {
+  text-align: center;
+  height:250px;
+  margin: 0 auto;
+  padding:3px;
+  background: #eee;
+  border: 1px solid #ccc;
+}
+
+.yelp .image img {
+  max-width:100%;
+  max-height:100%;
+  margin: 0 auto;
+}
