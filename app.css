@@ -140,7 +140,14 @@ body {
 #map .info_window {
   max-width: 250px;
   padding: 0.75em;
+  transition: height 0.2s linear;
 }
+
+#map .info_window .loading {
+  font-style: italic;
+  text-align: center;
+}
+
 
 #map .info_window .title {
   text-align: center;
@@ -152,23 +159,37 @@ body {
   text-align: center;
 }
 
-.yelp {
+.yelp-info {
+  text-align: center;
   font-size: 15px;
   font-weight: bold;
 }
 
-.yelp .image {
+.yelp-info a {
+
+}
+
+.yelp-info .rating a {
+  color: goldenrod;
+  letter-spacing:2px;
+}
+
+.yelp-info .price {
+  color: green;
+}
+
+.yelp-info .image {
   text-align: center;
-  /*height: 200px;*/
+  min-height: 150px;
   margin: 0 auto;
 }
 
-.yelp .image img {
+.yelp-info .image img {
   padding:3px;
   border: 1px solid #ccc;
   background: #eee;
   display: inline-block;
-  max-width:200px;
-  max-height:200px;
+  max-width:150px;
+  max-height:150px;
   margin: 0 auto;
 }

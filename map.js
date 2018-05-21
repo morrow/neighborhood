@@ -145,13 +145,24 @@ Map = (getVisibleItems, getAllItems, target='map', map_config={})=> {
       window_info = ref[j];
       window_info.close();
     }
-    if(info_windows[marker.id].getContent().indexOf('yelp')<0){
+    if(info_windows[marker.id].getContent().indexOf('yelp-info')<0){
       getYelpInfo(getAllItems()[marker.id]).then((data)=>{
-        info_windows[marker.id].setContent(info_windows[marker.id].getContent() + processYelpContent(data))
+        info_windows[marker.id].setContent(info_windows[marker.id].getContent().replace("<div class='loading'>loading yelp info...</div>", '') + processYelpContent(data))
         google_map.panTo(new google.maps.LatLng(info_windows[marker.id].getPosition().lat() + 0.005, info_windows[marker.id].getPosition().lng()))
       })
     }
     return info_windows[marker.id].open(google_map, marker);
+  }
+
+  const getStars = (rating)=> {
+    let stars = ''
+    for(var i = 0; i < 5; i++){
+      stars += i < parseFloat(rating) ? '★' : '☆'
+    }
+    if(rating % 1 > 0){
+      // stars += '☆'
+    }
+    return stars
   }
 
   const processYelpContent = (content)=>{
@@ -159,14 +170,15 @@ Map = (getVisibleItems, getAllItems, target='map', map_config={})=> {
     if(business == undefined){
       return ''
     }
-    return `
-<div class='yelp'>
-  <div class='image'><img src='${business.image_url}' /></div>`
-+ (business.rating ? `<div class='rating'>Rating: ${business.rating} / 5</div>` : '')
-+ (business.price ? `<div class='price'>Price: ${business.price}</div>` : '')
-+ (business.phone ? `<div class='phone'>Phone: ${business.phone}</div>` : '')
-+ `</div>
-`
+    console.log(business)
+    return `<div class='yelp-info'>
+              <div class='image'><img src='${business.image_url}' /></div>`
+              + (business.price ? `<div class='price'>${business.price}</div>` : '')
+              + (business.rating ? `<div class='rating'>${getStars(Math.round(business.rating))}</div>` : '')
+              + (business.location ? `<div class='address'><a href='https://www.google.com/maps/place/${business.location.display_address.join('+')}' target='_blank'>${business.location.display_address.join(' ')}</div>` : '')
+              + (business.display_phone ? `<div class='phone'><a href='tel:business.phone'>${business.display_phone}</a></div>` : '')
+              + `<div class='powered-by'>Powered by <a href='${business.url}' target='_blank'>yelp</a></div>
+            </div>`
   }
 
 
@@ -210,6 +222,7 @@ Map = (getVisibleItems, getAllItems, target='map', map_config={})=> {
 <div id='${i}' class='info_window'>
   <div class='title'>${location.name}</div>
   <div class='description'>${location.description}</div>
+  <div class='loading'>loading yelp info...</div>
 </div>`
         });
         google.maps.event.addListener(markers[i], 'click', function() {
