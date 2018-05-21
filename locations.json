@@ -11,7 +11,7 @@
     "1": {
       "id": 1,
       "name": "Revelry",
-      "description": "It's a brewery",
+      "description": "Brewery",
       "category": "breweries",
       "icon": "beer",
       "coordinates": [32.807076,-79.9471987]

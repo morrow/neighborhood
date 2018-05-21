@@ -1,0 +1,15 @@
+{
+  "name": "neighborhood",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:morrow/neighborhood.git",
+  "author": "= <terrymorrow@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "http-server -p 3000 | open http://localhost:3000"
+  },
+  "devDependencies": {
+    "http-server": "^0.11.1",
+    "open": "0.0.5"
+  }
+}

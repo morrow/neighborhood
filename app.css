@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Alfa+Slab+One');
+@import url('https://fonts.googleapis.com/css?family=Alfa+Slab+One|IBM+Plex+Sans|Roboto+Slab');
 
 * {
   margin: 0;
@@ -10,7 +10,7 @@ html, body, #wrap {
 }
 
 body {
-  font-family:helvetica neue;
+  font-family:"IBM Plex Sans";
 }
 
 #wrap {
@@ -50,11 +50,20 @@ body {
   border-right: 1px solid #555;
   font-size:15px;
   text-align: center;
-  letter-spacing: 2px;
+  /*letter-spacing: 2px;*/
   text-transform: capitalize;
   color: #555;
   min-width:150px;
   background: linear-gradient(#111, #333);
+  font-family: 'Roboto Slab';
+}
+
+#navigation div:hover {
+  background: linear-gradient(#222, #444);
+}
+
+[data-icon] {
+  margin-right:0.5em;
 }
 
 .visible .fa-beer {
@@ -105,11 +114,23 @@ body {
 
 #sidebar #filter {
   display: flex;
+  border-bottom:1px solid #555;
+  background: #555;
+}
+
+#sidebar #filter #filter-label {
+  font-size:12px;
+  text-align: center;
+  position: relative;
+  top: 1em;
+  left: 1em;
+  color: #aaa;
 }
 
 #sidebar #filter input {
-  flex: 1;
+  flex: 0.75;
   padding: 0.5em;
+  margin: 1em auto;
 }
 
 #sidebar .item {
@@ -146,6 +167,7 @@ body {
 #map .info_window .loading {
   font-style: italic;
   text-align: center;
+  margin: 0.5em;
 }
 
 
@@ -153,6 +175,7 @@ body {
   text-align: center;
   font-weight: bold;
   padding-bottom:0.5em;
+  font-size:1.25em;
 }
 
 #map .info_window .description {
@@ -165,11 +188,11 @@ body {
   font-weight: bold;
 }
 
-.yelp-info a {
-
+.yelp-info > div {
+  margin:0.5em 0;
 }
 
-.yelp-info .rating a {
+.yelp-info .rating {
   color: goldenrod;
   letter-spacing:2px;
 }

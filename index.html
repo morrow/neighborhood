@@ -3,6 +3,7 @@
   <head>
     <title>Neighborhood</title>
     <link rel='stylesheet' href='/app.css' />
+    <link rel='icon' type='image/png' href='/favicon.ico' />
   </head>
   <body>
     <div id='wrap'>
@@ -18,13 +19,14 @@
       <div id='main'>
         <div id='sidebar'>
           <div id='filter'>
-            <input data-bind='value: filter_input, valueUpdate: "afterkeydown"' placeholder="filter" />
+            <div id='filter-label'>Filter: </div>
+            <input type='search' data-bind='value: filter_input, valueUpdate: ["keyup","search"]' placeholder="filter" />
           </div>
           <div class='items' data-bind='foreach: getVisibleItems(filter_input())'>
             <div class='item' data-bind='text: $data.name, attr:{title: $data.description}, click: ()=>{sidebarClick($data.id)}'></div>
           </div>
         </div>
-        <div id='map'>map goes here</div>
+        <div id='map'>loading map...</div>
       </div>
     </div>
     <script type='text/javascript' src='knockout-3.4.2.js'></script>
