@@ -14,7 +14,7 @@ body {
 }
 
 #wrap {
-
+  min-width: 375px;
 }
 
 #header {
@@ -104,12 +104,30 @@ body {
   color: red;
 }
 
+#sidebar-access {
+  position: absolute;
+  top: 105px;
+  left: 10px;
+  z-index: 99;
+  padding: 0.1em 0.3em;
+  background: white;
+  color: #757575;
+  border:1px solid #ccc;
+  cursor: pointer;
+  display: none;
+}
+
+#sidebar-access svg {
+  margin:0 auto;
+}
+
 #sidebar {
   background: linear-gradient(#222, #111);
   overflow-y: auto;
   height: 100%;
   min-width: 200px;
   color: white;
+  z-index: 99;
 }
 
 #sidebar #filter {
@@ -131,6 +149,7 @@ body {
   flex: 0.75;
   padding: 0.5em;
   margin: 1em auto;
+  background: #eee;
 }
 
 #sidebar .item {

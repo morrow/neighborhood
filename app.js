@@ -1,5 +1,5 @@
-const MapView = (parent)=> {
-  this.mapConfig = {
+const MapView = ()=> {
+  return mapConfig = {
     restaurants: {
       strokeColor: 'black',
       fillColor: '#ffffff',
@@ -19,24 +19,27 @@ const MapView = (parent)=> {
   }
 }
 
-const SidebarView = (parent)=> {
-  this.sidebarClick = (id)=>{
-    this.Map && this.Map.showWindow ? this.Map.showWindow(id) : 1
+const SidebarView = ()=> {
+  sidebarClick = (id)=>{
+    app.GoogleMap && app.GoogleMap.showWindow ? app.GoogleMap.showWindow(id) : 1
+  }
+  sidebarAccessClick = ()=> {
+    sidebar_is_extended(!sidebar_is_extended())
   }
 }
 
-const NavigationView = (parent, data)=> {
-  this.categoryClick = (category, e)=> {
-    parent.toggleCategory(category)
+const NavigationView = (data)=> {
+  categoryClick = (category, e)=> {
+    toggleCategory(category)
   }
-  this.toggleCategory = (category)=> {
-    if(this.visible_categories.indexOf(category)>=0){
-      this.visible_categories.remove(category)
+  toggleCategory = (category)=> {
+    if(visible_categories.indexOf(category)>=0){
+      visible_categories.remove(category)
     } else {
-      this.visible_categories.push(category)
+      visible_categories.push(category)
     }
   }
-  this.getCategoryIconCss = (category)=>{
+  getCategoryIconCss = (category)=>{
     let icons = {
       breweries: 'fas fa-beer',
       parks: 'fas fa-tree',
@@ -48,44 +51,55 @@ const NavigationView = (parent, data)=> {
 }
 
 const App = ()=> {
-  this.locations = {
+  locations = {
     byId: {},
     allIds: []
   }
-  this.filter_input = ko.observable()
-  this.hasMatch = (item, query='')=> Object.keys(item).filter(k=>item[k] != undefined && item[k].toString().toLowerCase().match(query.toLowerCase())).length > 0
-  this.getAllItems = ()=> this.locations.allIds.map(id=>this.locations.byId[id])
-  this.getVisibleItems = ()=> getAllItems().filter(item=> this.visible_categories().indexOf(item.category) >= 0 && hasMatch(item, filter_input()))
+  filter_input = ko.observable()
+  visible_categories = ko.observableArray()
+  sidebar_is_extended = ko.observable(false)
+  hasMatch = (item, query='')=> Object.keys(item).filter(k=>item[k] != undefined && item[k].toString().toLowerCase().match(query.toLowerCase())).length > 0
+  getAllItems = ()=> locations.allIds.map(id=>locations.byId[id])
+  getVisibleItems = ()=> getAllItems().filter(item=> visible_categories().indexOf(item.category) >= 0 && hasMatch(item, filter_input()))
   // fetch location data via XHR
+  var that = this
   _fetch('/locations.json').then(JSON.parse).then((data)=>{
     // update locations
-    this.locations = data
+    locations = data
     // populate categories from location data
-    this.categories = data.allIds.map((id)=>data.byId[id].category).filter((c,i,a)=> a.indexOf(c) == i)
+    categories = data.allIds.map((id)=>data.byId[id].category).filter((c,i,a)=> a.indexOf(c) == i)
     // visible categories is initially all categories
-    this.visible_categories = ko.observableArray(this.categories)
+    that.visible_categories(categories)
     // apply bindings to views
-    this.MapView = ko.applyBindings(MapView(this), document.getElementById('map'))
-    this.SidebarView = ko.applyBindings(SidebarView(this), document.getElementById('sidebar'))
-    this.NavigationView = ko.applyBindings(NavigationView(this, data), document.getElementById('navigation'))
-    // create map
-    this.Map = Map(this.getVisibleItems, this.getAllItems, 'map', this.mapConfig)
-    // update map when filter input is changed
-    this.filter_input.subscribe((value)=>{
-      this.Map.setMarkers()
-    })
-    // update map when categories are enabled/disabled
-    this.visible_categories.subscribe((value)=>{
-      this.Map.setMarkers()
-    })
+    that.MapView = ko.applyBindings(MapView(), document.getElementById('map'))
+    that.SidebarView = ko.applyBindings(SidebarView(), document.getElementById('sidebar'))
+    that.NavigationView = ko.applyBindings(NavigationView(data), document.getElementById('navigation'))
   }).catch((error)=>{
     // error loading location data, load empty map
     alert('Error loading location data. Please try again.')
-    this.SidebarView = ko.applyBindings(SidebarView(this), document.getElementById('sidebar'))
-    this.NavigationView = ko.applyBindings(NavigationView(this, {}), document.getElementById('navigation'))
-    this.MapView = ko.applyBindings(MapView(this), document.getElementById('map'))
-    this.Map = Map(()=>[], ()=>[], 'map', this.mapConfig)
+    that.SidebarView = ko.applyBindings(SidebarView(), document.getElementById('sidebar'))
+    that.NavigationView = ko.applyBindings(NavigationView({}), document.getElementById('navigation'))
+    that.MapView = ko.applyBindings(MapView(), document.getElementById('map'))
+    mapError()
   })
+  return { getVisibleItems, getAllItems, MapView, SidebarView, NavigationView, filter_input, visible_categories }
 }
 
-App()
+const app = App()
+
+window.mapLoad = ()=>{
+  app.GoogleMap = GoogleMap(app.getVisibleItems, app.getAllItems, 'map', app.MapView())
+  // update map when filter input is changed
+    app.filter_input.subscribe((value)=>{
+      app.GoogleMap.setMarkers()
+    })
+    // update map when categories are enabled/disabled
+    app.visible_categories.subscribe((value)=>{
+      app.GoogleMap.setMarkers()
+    })
+}
+
+window.mapError = ()=>{
+  console.log(GoogleMap)
+  app.GoogleMap = GoogleMap(()=>[], ()=>[], 'map', app.MapView.mapConfig)
+}

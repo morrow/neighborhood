@@ -110,13 +110,15 @@ const MAP_STYLES = [
   }
 ]
 
-Map = (getVisibleItems, getAllItems, target='map', map_config={})=> {
+GoogleMap = (getVisibleItems, getAllItems, target='map', map_config={})=> {
   var markers = []
   var info_windows = []
+  var bounds = new google.maps.LatLngBounds();
   var map_options = {
     zoom: 14,
     center: new google.maps.LatLng(32.7915092,-79.9407845),
-    styles: MAP_STYLES
+    styles: MAP_STYLES,
+    mapTypeControlOptions: { mapTypeIds: [] }
   }
 
   const initialize = ()=>{
@@ -127,7 +129,10 @@ Map = (getVisibleItems, getAllItems, target='map', map_config={})=> {
       info_windows.map(w=>w.close())
     })
     // resize map when window resizes
-    google.maps.event.addDomListener(window, 'resize', ()=> google.maps.event.trigger(map, 'resize'))
+    google.maps.event.addDomListener(window, 'resize', ()=> {
+      google.maps.event.trigger(map, 'resize')
+      google_map.fitBounds(bounds)
+    })
   }
 
   const showWindow = (marker)=>{
@@ -226,6 +231,8 @@ Map = (getVisibleItems, getAllItems, target='map', map_config={})=> {
           title: location.name,
           _location: location,
         });
+        // extend map bounds to marker position
+        bounds.extend(markers[i].getPosition())
         // create info window and add to info windows
         info_windows[i] = new google.maps.InfoWindow({
           content: `<div id='${i}' class='info_window'>
@@ -245,6 +252,7 @@ Map = (getVisibleItems, getAllItems, target='map', map_config={})=> {
 
   initialize()
   setMarkers()
+  google_map.fitBounds(bounds)
 
   return { initialize, setMarkers, showWindow }
 

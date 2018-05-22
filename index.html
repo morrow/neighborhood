@@ -3,7 +3,9 @@
   <head>
     <title>Neighborhood</title>
     <link rel='stylesheet' href='/app.css' />
+    <link rel='stylesheet' href='/responsive.css' />
     <link rel='icon' type='image/png' href='/favicon.ico' />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
     <div id='wrap'>
@@ -17,7 +19,10 @@
         </navigation>
       </div>
       <div id='main'>
-        <div id='sidebar'>
+        <div id='sidebar' data-bind="css: {extended: sidebar_is_extended}">
+          <div id='sidebar-access' data-bind="click: sidebarAccessClick, css: {visible: sidebar_is_extended}">
+            <i class='fas fa-bars'></i>
+          </div>
           <div id='filter'>
             <div id='filter-label'>Filter: </div>
             <input type='search' data-bind='value: filter_input, valueUpdate: ["keyup","search"]' placeholder="filter" />
@@ -30,11 +35,11 @@
       </div>
     </div>
     <script type='text/javascript' src='knockout-3.4.2.js'></script>
-    <script type='text/javascript' src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAjH1cIi1VDT4x3QHQi4V4y4ynTPUAr8q0'></script>
     <script type='text/javascript' src='/fontawesome.js'></script>
     <script type='text/javascript' src='/fontawesome-markers.min.js'></script>
     <script type='text/javascript' src='/api.js'></script>
     <script type='text/javascript' src='/map.js'></script>
     <script type='text/javascript' src='/app.js'></script>
+    <script async defer type='text/javascript' src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAjH1cIi1VDT4x3QHQi4V4y4ynTPUAr8q0&callback=mapLoad&onerror=mapError'></script>
   </body>
 </html>
