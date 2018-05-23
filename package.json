@@ -6,10 +6,10 @@
   "author": "= <terrymorrow@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "http-server -p 3000 | open http://localhost:3000"
+    "start": "http-server -p 3000 | opener http://localhost:3000"
   },
   "devDependencies": {
     "http-server": "^0.11.1",
-    "open": "0.0.5"
+    "opener": "^1.4.3"
   }
 }
