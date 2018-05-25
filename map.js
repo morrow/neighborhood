@@ -243,8 +243,8 @@ GoogleMap = (getVisibleItems, getAllItems, target='map', map_config={})=> {
         });
         // show window when marker is clicked
         google.maps.event.addListener(markers[i], 'click', function() {
-          let that = this
-          showWindow(that)
+          let self = this
+          showWindow(self)
         });
       }
     }

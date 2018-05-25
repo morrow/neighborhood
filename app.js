@@ -62,24 +62,24 @@ const App = ()=> {
   getAllItems = ()=> locations.allIds.map(id=>locations.byId[id])
   getVisibleItems = ()=> getAllItems().filter(item=> visible_categories().indexOf(item.category) >= 0 && hasMatch(item, filter_input()))
   // fetch location data via XHR
-  var that = this
+  var self = this
   _fetch('/locations.json').then(JSON.parse).then((data)=>{
     // update locations
     locations = data
     // populate categories from location data
     categories = data.allIds.map((id)=>data.byId[id].category).filter((c,i,a)=> a.indexOf(c) == i)
     // visible categories is initially all categories
-    that.visible_categories(categories)
+    self.visible_categories(categories)
     // apply bindings to views
-    that.MapView = ko.applyBindings(MapView(), document.getElementById('map'))
-    that.SidebarView = ko.applyBindings(SidebarView(), document.getElementById('sidebar'))
-    that.NavigationView = ko.applyBindings(NavigationView(data), document.getElementById('navigation'))
+    self.MapView = ko.applyBindings(MapView(), document.getElementById('map'))
+    self.SidebarView = ko.applyBindings(SidebarView(), document.getElementById('sidebar'))
+    self.NavigationView = ko.applyBindings(NavigationView(data), document.getElementById('navigation'))
   }).catch((error)=>{
     // error loading location data, load empty map
     alert('Error loading location data. Please try again.')
-    that.SidebarView = ko.applyBindings(SidebarView(), document.getElementById('sidebar'))
-    that.NavigationView = ko.applyBindings(NavigationView({}), document.getElementById('navigation'))
-    that.MapView = ko.applyBindings(MapView(), document.getElementById('map'))
+    self.SidebarView = ko.applyBindings(SidebarView(), document.getElementById('sidebar'))
+    self.NavigationView = ko.applyBindings(NavigationView({}), document.getElementById('navigation'))
+    self.MapView = ko.applyBindings(MapView(), document.getElementById('map'))
     mapError()
   })
   return { getVisibleItems, getAllItems, MapView, SidebarView, NavigationView, filter_input, visible_categories }
